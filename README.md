@@ -1,5 +1,6 @@
 <<<<<<< HEAD
-# QuestionsQuestions
+# QuestionsQuestions    
+<p style="color: red;">Works good with relaxed assertions and gives logical relevant answers with human reading .</p>
 =======
 # RAG API with OpenAI Embeddings and Vision
 
