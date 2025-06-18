@@ -109,6 +109,12 @@ async def ask_api(request: AskRequest):
             f"Image Description: {image_description or ''}\n"
             f"Context: {' '.join(top_contexts)}"
         )
+        # Debug logging for retrieval and prompt
+        print("[DEBUG] Top contexts:")
+        for idx, ctx in enumerate(top_contexts):
+            print(f"[DEBUG] Context {idx+1}: {ctx[:200]}...")
+        print("[DEBUG] Answer prompt:")
+        print(answer_prompt)
         answer_response = openai.chat.completions.create(
             model="gpt-4o",
             messages=[
