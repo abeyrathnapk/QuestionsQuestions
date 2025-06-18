@@ -2,4 +2,3 @@ fastapi
 openai
 numpy
 pydantic
-vercel-fastapi

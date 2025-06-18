@@ -8,10 +8,8 @@ import openai
 import os
 import base64
 import re
-from vercel_fastapi import VercelFastAPI
 
 app = FastAPI()
-app = VercelFastAPI(app)
 
 EMBEDDINGS_PATH = "openai_embeddings.npy"
 METADATA_PATH = "openai_embeddings_metadata.json"
