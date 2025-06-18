@@ -4,12 +4,13 @@
 description: "TDS Virtual TA Project Sample (but not the actual evaluation) Questions"
 
 providers:
-  - id: https
+  - id: http
     config:
       url: https://tdsproject1-production.up.railway.app/api/
       method: POST
       headers:
         Content-Type: application/json
+        OPENAI_API_KEY: "{{ env.OPENAI_API_KEY }}"
       body: |
         {
           "question": "{{ question }}"{% if image %},

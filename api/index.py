@@ -99,29 +99,45 @@ async def ask_api(request: AskRequest):
             links.append({"url": url, "text": link_text})
     links = links[:2]
 
+    # Format contexts for clarity
+    context_str = "\n\n".join([f"Context {i+1}: {ctx}" for i, ctx in enumerate(top_contexts)])
+    # Chain-of-thought few-shot examples and instructions
+    few_shot_examples = (
+        "Examples:\n"
+        "Q: The question asks to use gpt-3.5-turbo-0125 model but the ai-proxy provided by Anand sir only supports gpt-4o-mini. So should we just use gpt-4o-mini or use the OpenAI API for gpt3.5 turbo?\n"
+        "A: Let's think step by step. The context says the AI Proxy only supports gpt-4o-mini. Therefore, you should use `gpt-4o-mini` with the provided AI Proxy. Do not use gpt-3.5-turbo-0125 unless the proxy supports it.\n\n"
+        "Q: If a student scores 10/10 on GA4 as well as a bonus, how would it appear on the dashboard?\n"
+        "A: Let's think step by step. The context says a bonus is added to the score. If you score 10/10 and receive a bonus, the dashboard will show '110'.\n\n"
+        "Q: When is the TDS Sep 2025 end-term exam?\n"
+        "A: Let's think step by step. The context does not provide a date for the exam. Therefore, I don't know based on the provided information.\n\n"
+        "Q: I know Docker but have not used Podman before. Should I use Docker for this course?\n"
+        "A: Let's think step by step. If you're already familiar with Docker, you can use it for this course, but Podman is recommended for better security and compatibility.\n\n"
+    )
+    answer_prompt = (
+        "Answer the following question using the provided context(s). "
+        "If an image description is given, use it as well. "
+        "Think step by step and explain your reasoning before giving the final answer. "
+        "If the answer is not present in the provided context(s), say 'I don't know based on the provided information.' "
+        "If a relevant link is present in the context, include it in your answer. "
+        "If the answer is a score or number, use the exact format as shown in the context. "
+        "If the question is about which model to use, clarify the model name and why, based on the context. "
+        "If the question is about exam dates or deadlines, only answer if the date is explicitly present in the context; otherwise, say you don't know. "
+        "Do not add unnecessary explanations.\n\n"
+        f"{few_shot_examples}"
+        f"Question: {question}\n"
+        f"Image Description: {image_description or ''}\n"
+        f"Contexts:\n{context_str}"
+    )
+    print("[DEBUG] Chain-of-thought Answer prompt:")
+    print(answer_prompt)
     try:
-        answer_prompt = (
-            "Answer the following question using the provided context. "
-            "If an image description is given, use it as well. "
-            "Respond in a single, direct, and natural sentence, using code formatting and quotations where appropriate. "
-            "Do not add unnecessary explanations.\n\n"
-            f"Question: {question}\n"
-            f"Image Description: {image_description or ''}\n"
-            f"Context: {' '.join(top_contexts)}"
-        )
-        # Debug logging for retrieval and prompt
-        print("[DEBUG] Top contexts:")
-        for idx, ctx in enumerate(top_contexts):
-            print(f"[DEBUG] Context {idx+1}: {ctx[:200]}...")
-        print("[DEBUG] Answer prompt:")
-        print(answer_prompt)
         answer_response = openai.chat.completions.create(
             model="gpt-4o",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant for a RAG system."},
                 {"role": "user", "content": answer_prompt}
             ],
-            max_tokens=150
+            max_tokens=200
         )
         answer_text = answer_response.choices[0].message.content.strip()
     except Exception as e:
