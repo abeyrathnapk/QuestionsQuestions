@@ -1,0 +1,5 @@
+# Data Storytelling
+
+[[Image description: Here's alt text describing the image:
+
+A dark blue slide presentation titled "Narrate the Story" shows a channel banking report for Sandra Miles in May 2016.  Three interactive buttons labeled "Numbers," "Visuals," and "Orange Text" are on the left.  The report details a consecutive decline in unique mobile banking users,  a decrease from 5.91 million to 5.86 million (-0.9%).  It notes that 26.5% of active CASA clients use mobile banking, placing the user second among three peers.  The report shows that only 89.3% of the unique user target was achieved, with the next month's target set to 6.85 million.  The current progress is 62.5% of the total 9.37 million target.  A separate section analyzes channel performance, highlighting an increase in SMS users despite a previous decline, and a decrease in LiteSite and App users despite a prior increase.  The analysis concludes with a statement about month-on-month growth among peers and achieving targets.  A small video inset in the bottom right corner shows a man with short gray hair, wearing a dark shirt, looking directly at the camera.]](https://youtu.be/aF93i6zVVQg)

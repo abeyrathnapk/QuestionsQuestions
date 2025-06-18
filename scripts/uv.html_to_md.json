@@ -1,0 +1,10 @@
+{
+  "name": "html_to_md",
+  "description": "Convert HTML files to Markdown, download/copy images, and update image links.",
+  "entrypoint": "html_to_md.py",
+  "args": [
+    "<html_file>",
+    "[output_dir]"
+  ],
+  "python": true
+}
